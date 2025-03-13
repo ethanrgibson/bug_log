@@ -21,6 +21,22 @@ class BugsService {
     }
     return bug
   }
+
+  async updateBug(bugId, bugData, userInfo) {
+    const bugToUpdate = await dbContext.Bugs.findById(bugId).populate('creator')
+
+    if (bugToUpdate.creatorId != userInfo.id) {
+      throw new Error('you cannot update another users bug')
+    }
+    bugToUpdate.title = bugData.title ?? bugToUpdate.title
+    bugToUpdate.description = bugData.description ?? bugToUpdate.description
+
+    await bugToUpdate.save()
+
+    return bugToUpdate
+  }
+
+
 }
 
 

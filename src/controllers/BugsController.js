@@ -12,6 +12,9 @@ export class BugsController extends BaseController {
       .post('', this.createBug)
       .get('', this.getAllBugs)
       .get('/:bugId', this.getBugById)
+      .put('/:bugId', this.updateBug)
+      .delete('/:bugId', this.deleteBug)
+
 
 
   }
@@ -48,9 +51,22 @@ export class BugsController extends BaseController {
       next(error)
     }
 
-
-
   }
 
+  async updateBug(request, response, next) {
+    try {
+      const bugId = request.params.bugId
+      const bugData = request.body
+      const userInfo = request.userInfo
+      const updateBug = await bugService.updateBug(bugId, bugData, userInfo)
+      response.send(updateBug)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async deleteBug(request, response, next) {
+
+  }
 
 }
