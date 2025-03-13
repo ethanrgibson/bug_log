@@ -7,6 +7,10 @@ class NotesService {
     return createNote
   }
 
+  async getNotesByBugId(bugId) {
+    const notes = await dbContext.Notes.find({ bugId: bugId })
+    return notes
+  }
 }
 
 export const notesService = new NotesService()
