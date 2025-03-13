@@ -11,6 +11,16 @@ class BugsService {
     const bugs = await dbContext.Bugs.find()
     return bugs
   }
+
+
+  async getBugById(bugId) {
+    const bug = await dbContext.Bugs.findById(bugId).populate('creator')
+
+    if (bug == null) {
+      throw new Error('Bug does not exist, loser!')
+    }
+    return bug
+  }
 }
 
 
