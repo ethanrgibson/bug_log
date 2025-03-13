@@ -8,7 +8,7 @@ export const BugSchema = new Schema(
     priority: { type: Number, required: true, min: 1, max: 5 },
     closed: { type: Boolean, required: true, default: false },
     closedDate: { type: Date },
-    creatorId: { type: Schema.ObjectId, ref: 'Account' }
+    creatorId: { type: Schema.ObjectId, required: true, ref: 'Account' }
 
   },
 
@@ -20,7 +20,7 @@ export const BugSchema = new Schema(
 
 )
 
-BugSchema.virtual('Account',
+BugSchema.virtual('creator',
 
   {
     ref: 'Account',
