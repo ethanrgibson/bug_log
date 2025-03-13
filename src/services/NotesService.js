@@ -11,6 +11,17 @@ class NotesService {
     const notes = await dbContext.Notes.find({ bugId: bugId })
     return notes
   }
+
+  async deleteNote(noteId, userInfo) {
+    const noteToDelete = await dbContext.Notes.findById(noteId)
+    if (noteToDelete.creatorId != userInfo.id) {
+      throw new Error('cannot delete a bug you did not create')
+    }
+    await noteToDelete.deleteOne()
+    return `${noteToDelete} note was deleted`
+  }
+
 }
+
 
 export const notesService = new NotesService()
