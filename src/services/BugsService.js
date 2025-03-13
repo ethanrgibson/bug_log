@@ -36,6 +36,14 @@ class BugsService {
     return bugToUpdate
   }
 
+  async deleteBug(bugId, userInfo) {
+    const bugToDelete = await this.getBugById(bugId)
+    if (bugToDelete.creatorId != userInfo.id) {
+      throw new Error('cannot delete a bug you did not create')
+    }
+    await bugToDelete.deleteOne()
+    return `${bugToDelete} bug was deleted`
+  }
 
 }
 
